@@ -12,8 +12,6 @@
 
 #include "libft.h"
 
-//
-
 int	ft_isspace(int c)
 {
 	if (c == 32)
@@ -23,5 +21,3 @@ int	ft_isspace(int c)
 	else
 		return (0);
 }
-
-

@@ -13,12 +13,9 @@
 #include "./libft/includes/libft.h"
 #include "ft_minitalk.h"
 
-
-
-
 static void	ft_sigaction(int sig)
 {
-	static int	received = 0;
+	static int	received;
 
 	if (sig == SIGUSR1)
 		++received;

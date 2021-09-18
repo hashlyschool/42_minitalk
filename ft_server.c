@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_minitalk.h"
 #include "./libft/includes/libft.h"
+#include "ft_minitalk.h"
 
 static void	ft_sigaction(int sig, siginfo_t *siginfo, void *context)
 {
@@ -39,7 +39,7 @@ static void	ft_sigaction(int sig, siginfo_t *siginfo, void *context)
 	else
 		c <<= 1;
 }
- 
+
 int	main(void)
 {
 	struct sigaction	s_sigaction;
