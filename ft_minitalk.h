@@ -13,6 +13,8 @@
 #ifndef FT_MINITALK_H
 # define FT_MINITALK_H
 
+# define SLEEP_MICROSECOND 100
+
 # include <signal.h>
 
 #endif

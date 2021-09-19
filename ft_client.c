@@ -15,7 +15,7 @@
 
 static void	ft_sigaction(int sig)
 {
-	static int	received;
+	static int	received = 0;
 
 	if (sig == SIGUSR1)
 		++received;
@@ -42,14 +42,14 @@ static void	ft_kill(int pid, char *str)
 				kill(pid, SIGUSR2);
 			else
 				kill(pid, SIGUSR1);
-			usleep(100);
+			usleep(SLEEP_MICROSECOND);
 		}
 	}
 	i = 8;
 	while (i--)
 	{
 		kill(pid, SIGUSR1);
-		usleep(100);
+		usleep(SLEEP_MICROSECOND);
 	}
 }
 
