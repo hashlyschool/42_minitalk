@@ -1,6 +1,6 @@
 NAME		= libft.a
 CC			= clang
-FLAGS		= -O3 -Wall -Wextra -Werror
+FLAGS		= -Wall -Wextra -Werror
 RM			= rm -rf
 AR			= ar rc
 INC			= -I ./includes/

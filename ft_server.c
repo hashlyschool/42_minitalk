@@ -19,10 +19,10 @@ static void	ft_sigaction(int sig, siginfo_t *siginfo, void *context)
 	static pid_t			client_pid = 0;
 	static unsigned char	c = 0;
 
-	(void)context;
-	if (!client_pid)
+	context = 0;
+	if (client_pid == 0)
 		client_pid = siginfo->si_pid;
-	c |= (sig == SIGUSR2);
+	c = c | (sig == SIGUSR2);
 	if (++i == 8)
 	{
 		i = 0;
@@ -35,6 +35,7 @@ static void	ft_sigaction(int sig, siginfo_t *siginfo, void *context)
 		ft_putchar_fd(c, 1);
 		c = 0;
 		kill(client_pid, SIGUSR1);
+		usleep(SLEEP_MICROSECOND);
 	}
 	else
 		c <<= 1;
@@ -49,6 +50,7 @@ int	main(void)
 	ft_putchar_fd('\n', 1);
 	s_sigaction.sa_sigaction = ft_sigaction;
 	s_sigaction.sa_flags = SA_SIGINFO;
+	sigemptyset(&s_sigaction.sa_mask);
 	sigaction(SIGUSR1, &s_sigaction, 0);
 	sigaction(SIGUSR2, &s_sigaction, 0);
 	while (1)
