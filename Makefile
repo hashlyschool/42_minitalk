@@ -1,7 +1,7 @@
 NAME_SERVER	= server
 NAME_CLIENT	= client
 CC			= clang
-FLAGS		= -Wall -Wextra -Werror
+FLAGS		= -O2 -Wall -Wextra -Werror
 RM			= rm -rf
 INC_PATH	= ./
 SRCS_PATH	= ./

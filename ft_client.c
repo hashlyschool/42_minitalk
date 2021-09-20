@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_client.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hashly <hashly@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: hashly <hashly@students.21-school.ru>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:15:30 by hashly            #+#    #+#             */
-/*   Updated: 2021/09/17 14:49:50 by hashly           ###   ########.fr       */
+/*   Updated: 2021/09/20 12:49:35 by hashly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./libft/includes/libft.h"
 #include "ft_minitalk.h"
+
+static void	put_str_in_color(char *color, char *str)
+{
+	ft_putstr_fd(color, 1);
+	ft_putstr_fd(str, 1);
+	ft_putstr_fd(DEFAULT, 1);
+}
 
 static void	ft_sigaction(int sig)
 {
@@ -21,8 +28,9 @@ static void	ft_sigaction(int sig)
 		++received;
 	else if (sig == SIGUSR2)
 	{
+		put_str_in_color(GREEN, "Server received\t");
 		ft_putnbr_fd(received, 1);
-		ft_putchar_fd('\n', 1);
+		put_str_in_color(GREEN, " bytes\n");
 		exit(0);
 	}
 }
@@ -48,6 +56,7 @@ static void	ft_kill_signal(int pid, char *str)
 				kill(pid, SIGUSR1);
 			usleep(SLEEP_MICROSECOND);
 		}
+		usleep(SLEEP_MICROSECOND);
 	}
 	i = 8;
 	while (i--)
@@ -55,6 +64,7 @@ static void	ft_kill_signal(int pid, char *str)
 		kill(pid, SIGUSR1);
 		usleep(SLEEP_MICROSECOND);
 	}
+	usleep(SLEEP_MICROSECOND);
 }
 
 int	main(int argc, char **argv)
@@ -63,10 +73,9 @@ int	main(int argc, char **argv)
 
 	if (argc != 3 || ft_strlen(argv[2]) == 0)
 		return (1);
-	ft_putstr_fd("Bytes sent    : ", 1);
+	put_str_in_color(GREEN, "You\tsent\t");
 	ft_putnbr_fd(ft_strlen(argv[2]), 1);
-	ft_putchar_fd('\n', 1);
-	ft_putstr_fd("Bytes received: ", 1);
+	put_str_in_color(GREEN, " bytes\n");
 	s_sigaction.sa_handler = ft_sigaction;
 	s_sigaction.sa_flags = SA_SIGINFO;
 	sigemptyset(&s_sigaction.sa_mask);

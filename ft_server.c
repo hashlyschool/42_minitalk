@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_server.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hashly <hashly@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: hashly <hashly@students.21-school.ru>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 09:35:23 by hashly            #+#    #+#             */
-/*   Updated: 2021/09/17 14:41:31 by hashly           ###   ########.fr       */
+/*   Updated: 2021/09/20 12:54:25 by hashly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	ft_sigaction(int sig, siginfo_t *siginfo, void *context)
 		if (!c)
 		{
 			kill(client_pid, SIGUSR2);
+			usleep(SLEEP_MICROSECOND);
 			client_pid = 0;
 			return ;
 		}
@@ -41,16 +42,33 @@ static void	ft_sigaction(int sig, siginfo_t *siginfo, void *context)
 		c <<= 1;
 }
 
+static	void	str_in_color(char *color, char *str)
+{
+	ft_putstr_fd(color, 1);
+	ft_putstr_fd(str, 1);
+	ft_putstr_fd(DEFAULT, 1);
+}
+
+static void	ft_putnead(int pid)
+{
+	str_in_color(GREEN, "\t\t\tGood day!\n");
+	str_in_color(GREEN, "It is minitalk by hashly\n");
+	str_in_color(GREEN, "You have launched the server side of the project.\n");
+	str_in_color(GREEN, "Process id:\t");
+	ft_putnbr_fd(pid, 1);
+	str_in_color(GREEN, "\nTo use the server, you need to run the command:\n\t");
+	str_in_color(GREEN, " `./client [PID server] [message]`\n");
+	str_in_color(GREEN, "=============================");
+	str_in_color(GREEN, "=============================\n");
+}
+
 int	main(void)
 {
 	struct sigaction	s_sigaction;
 
-	ft_putstr_fd("Server PID: ", 1);
-	ft_putnbr_fd(getpid(), 1);
-	ft_putchar_fd('\n', 1);
+	ft_putnead(getpid());
 	s_sigaction.sa_sigaction = ft_sigaction;
 	s_sigaction.sa_flags = SA_SIGINFO;
-	sigemptyset(&s_sigaction.sa_mask);
 	sigaction(SIGUSR1, &s_sigaction, 0);
 	sigaction(SIGUSR2, &s_sigaction, 0);
 	while (1)
